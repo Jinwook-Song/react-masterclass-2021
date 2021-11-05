@@ -82,7 +82,7 @@ function Coins() {
   return (
     <Container>
       <Header>
-        <Title>코인</Title>
+        <Title>Crypto Coin</Title>
       </Header>
       {loading ? (
         <Loader>Loading...</Loader>
