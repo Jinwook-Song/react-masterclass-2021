@@ -26,6 +26,7 @@ const animation = keyframes`
 `;
 
 const Emoji = styled.span`
+  will-change: contents;
   font-size: 3rem;
 `;
 
@@ -37,6 +38,10 @@ const Box = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  &:hover {
+    animation: none;
+    border-radius: 10%;
+  }
   ${Emoji} {
     transition: 1s;
     &:hover {
