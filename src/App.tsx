@@ -49,6 +49,9 @@ table {
 * {
   box-sizing: border-box;
 }
+html {
+  font-size: 2vmin;
+}
 body {
   font-family: 'Source Sans Pro', sans-serif;
   background-color: ${(props) => props.theme.bgColor};
@@ -56,6 +59,7 @@ body {
 }
 a {
   text-decoration: none;
+  color: inherit
 }
 `;
 
