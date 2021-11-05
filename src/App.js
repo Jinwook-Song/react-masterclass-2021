@@ -1,36 +1,47 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 
-const Father = styled.div`
+const Wrapper = styled.div`
+  height: 100vh;
+  width: 100vw;
+  background-color: teal;
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `;
 
-const Btn = styled.button`
-  color: white;
-  background-color: tomato;
-  border: 0;
-  border-radius: 15px;
-  padding: 10px 20px;
+const animation = keyframes`
+  0% {
+    transform: rotate(0deg);
+    border-radius:0;
+  }
+  50% {
+    transform: rotate(360deg);
+    border-radius:100px;
+  }
+  100% {
+    transform: rotate(0deg);
+    border-radius:0;
+  }
 `;
 
-const Input = styled.input.attrs({ required: true, minLength: 10 })`
-  background-color: pink;
+const Box = styled.div`
+  height: 10rem;
+  width: 160px;
+  background-color: black;
+  animation: ${animation} 2s linear infinite;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 function App() {
   return (
-    <Father as="header">
-      <Btn>Log in</Btn>
-      <Btn as="a" href="/">
-        Log in
-      </Btn>
-      <Input />
-      <Input />
-      <Input />
-      <Input />
-      <Input />
-      <Input />
-    </Father>
+    <Wrapper>
+      <Box>
+        <span>⭐</span>
+      </Box>
+    </Wrapper>
   );
 }
 
