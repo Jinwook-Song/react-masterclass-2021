@@ -1,28 +1,33 @@
 import styled from "styled-components";
 
-interface CircleProps {
+interface ContainerProps {
   bgColor: string;
+  borderColor: string;
 }
 
-const Container = styled.div<CircleProps>`
+const Container = styled.div<ContainerProps>`
   width: 10rem;
   height: 10rem;
   background-color: ${(props) => props.bgColor};
   border-radius: 50%;
+  border: 3px solid ${(props) => props.borderColor};
 `;
 
-function Circle({ bgColor }: CircleProps) {
-  return <Container bgColor={bgColor} />;
+interface CircleProps {
+  bgColor: string;
+  borderColor?: string;
+  text?: string;
+}
+
+function Circle({ bgColor, borderColor, text = "default text" }: CircleProps) {
+  return (
+    <Container //
+      bgColor={bgColor}
+      borderColor={borderColor ?? bgColor}
+    >
+      {text}
+    </Container>
+  );
 }
 
 export default Circle;
-
-interface PlayerShape {
-  name: string;
-  age: number;
-}
-
-const sayHello = (playerObj: PlayerShape) =>
-  `Hello ${playerObj.name} you ar ${playerObj.age} years old.`;
-
-sayHello({ name: "jw", age: 12 });
