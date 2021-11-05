@@ -29,17 +29,24 @@ const Box = styled.div`
   height: 10rem;
   width: 160px;
   background-color: black;
-  animation: ${animation} 2s linear infinite;
+  animation: ${animation} 2s ease-in-out infinite;
   display: flex;
   justify-content: center;
   align-items: center;
+  span {
+    font-size: 3rem;
+    transition: 1s;
+    &:hover {
+      font-size: 5rem;
+    }
+  }
 `;
 
 function App() {
   return (
     <Wrapper>
       <Box>
-        <span>⭐</span>
+        <span>🔥</span>
       </Box>
     </Wrapper>
   );
