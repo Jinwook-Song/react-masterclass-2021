@@ -22,8 +22,13 @@ const Header = styled.header`
   height: 10vh;
   width: 100%;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
+`;
+
+const GoBack = styled.h1`
+  font-size: max(min(3rem, 40px), 20px);
+  color: ${(props) => props.theme.accentColor2};
 `;
 
 const Title = styled.h1`
@@ -162,6 +167,9 @@ function Coin() {
         </title>
       </Helmet>
       <Header>
+        <Link to="/">
+          <GoBack>&larr;</GoBack>
+        </Link>
         <Title>
           {state?.name ? state.name : loading ? "Loading..." : infoData?.name}
         </Title>
