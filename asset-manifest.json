@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.js": "/react-masterclass-2021/static/js/main.8ac51d84.chunk.js",
-    "main.js.map": "/react-masterclass-2021/static/js/main.8ac51d84.chunk.js.map",
+    "main.js": "/react-masterclass-2021/static/js/main.6ad94293.chunk.js",
+    "main.js.map": "/react-masterclass-2021/static/js/main.6ad94293.chunk.js.map",
     "runtime-main.js": "/react-masterclass-2021/static/js/runtime-main.36a54129.js",
     "runtime-main.js.map": "/react-masterclass-2021/static/js/runtime-main.36a54129.js.map",
-    "static/js/2.3e1e91da.chunk.js": "/react-masterclass-2021/static/js/2.3e1e91da.chunk.js",
-    "static/js/2.3e1e91da.chunk.js.map": "/react-masterclass-2021/static/js/2.3e1e91da.chunk.js.map",
+    "static/js/2.16bf6852.chunk.js": "/react-masterclass-2021/static/js/2.16bf6852.chunk.js",
+    "static/js/2.16bf6852.chunk.js.map": "/react-masterclass-2021/static/js/2.16bf6852.chunk.js.map",
     "index.html": "/react-masterclass-2021/index.html",
-    "static/js/2.3e1e91da.chunk.js.LICENSE.txt": "/react-masterclass-2021/static/js/2.3e1e91da.chunk.js.LICENSE.txt"
+    "static/js/2.16bf6852.chunk.js.LICENSE.txt": "/react-masterclass-2021/static/js/2.16bf6852.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.36a54129.js",
-    "static/js/2.3e1e91da.chunk.js",
-    "static/js/main.8ac51d84.chunk.js"
+    "static/js/2.16bf6852.chunk.js",
+    "static/js/main.6ad94293.chunk.js"
   ]
 }
