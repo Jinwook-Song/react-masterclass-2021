@@ -1,10 +1,7 @@
 import { useEffect, useState } from "react";
 import { Outlet, useLocation, useParams } from "react-router";
-import { Routes, Route, Link } from "react-router-dom";
-
+import { Link, useMatch } from "react-router-dom";
 import styled from "styled-components";
-import Chart from "./Chart";
-import Price from "./Price";
 
 const Container = styled.div`
   padding: 0 1rem;
@@ -61,6 +58,27 @@ const Description = styled.p`
   margin: 1rem 0;
   font-size: max(min(1.5rem, 20px), 15px);
   color: ${(props) => props.theme.accentColor};
+`;
+
+const Tabs = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  margin: 2rem 0;
+  gap: 1rem;
+`;
+const Tab = styled.span<{ isActive: boolean }>`
+  text-align: center;
+  text-transform: uppercase;
+  font-size: max(min(1rem, 15px), 12px);
+  font-weight: 400;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 1rem 0;
+  border-radius: 1rem;
+  color: ${(props) => props.theme.accentColor2};
+  a {
+    display: block;
+    text-decoration: ${(props) => (props.isActive ? "underline" : "none")};
+  }
 `;
 
 interface InfoData {
@@ -121,6 +139,8 @@ function Coin() {
   const [price, setPrice] = useState<PriceData>();
   const { coinId } = useParams();
   const { state } = useLocation();
+  const priceMatch = useMatch("/:coinId/price");
+  const chartMatch = useMatch("/:coinId/chart");
   useEffect(() => {
     (async () => {
       const info = await fetch(
@@ -174,6 +194,16 @@ function Coin() {
               <span>{price?.max_supply}</span>
             </OverviewItem>
           </Overview>
+
+          <Tabs>
+            <Tab isActive={chartMatch !== null}>
+              <Link to="chart">Chart</Link>
+            </Tab>
+            <Tab isActive={priceMatch !== null}>
+              <Link to="price">Price</Link>
+            </Tab>
+          </Tabs>
+
           <Outlet />
         </>
       )}
