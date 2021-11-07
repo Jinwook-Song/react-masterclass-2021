@@ -147,25 +147,7 @@ function Coin() {
     ["price", coinId],
     () => fetchCoinPrice(coinId!)
   );
-  /*   const [loading, setLoading] = useState(true);
-  const [info, setInfo] = useState<InfoData>();
-  const [price, setPrice] = useState<PriceData>();
-  useEffect(() => {
-    (async () => {
-      const info = await fetch(
-        `https://api.coinpaprika.com/v1/coins/${coinId}`
-      );
-      const infoData = await info.json();
-      const price = await fetch(
-        `https://api.coinpaprika.com/v1/tickers/${coinId}`
-      );
-      const priceData = await price.json();
 
-      setInfo(infoData);
-      setPrice(priceData);
-      setLoading(false);
-    })();
-  }, [coinId]); */
   const loading = infoLoading || priceLoading;
   return (
     <Container>
