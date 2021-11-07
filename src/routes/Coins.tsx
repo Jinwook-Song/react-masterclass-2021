@@ -28,6 +28,7 @@ const Header = styled.header`
 const Title = styled.h1`
   font-size: max(min(3rem, 40px), 20px);
   color: ${(props) => props.theme.accentColor};
+  font-weight: 600;
 `;
 
 const CoinsList = styled.ul``;
@@ -43,11 +44,11 @@ const Coin = styled.li`
     display: flex;
     align-items: center;
     padding: 1rem;
+    font-weight: 600;
   }
   &:hover {
     a {
       color: ${(props) => props.theme.accentColor2};
-      font-weight: 600;
     }
   }
 `;
@@ -70,7 +71,11 @@ interface CoinInterface {
   type: string;
 }
 
-function Coins() {
+interface ICoinsProps {
+  toggleDark: () => void;
+}
+
+function Coins({ toggleDark }: ICoinsProps) {
   const { isLoading, data } = useQuery<CoinInterface[]>("allCoins", fetchCoins);
 
   return (
@@ -80,6 +85,7 @@ function Coins() {
       </Helmet>
       <Header>
         <Title>Crypto Coin</Title>
+        <button onClick={toggleDark}>Mode</button>
       </Header>
       {isLoading ? (
         <Loader>Loading...</Loader>

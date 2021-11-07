@@ -2,7 +2,7 @@ import { useQuery } from "react-query";
 import { useParams } from "react-router";
 import { fetchCoinHistory } from "../api";
 import ApexChart from "react-apexcharts";
-import { theme } from "../theme";
+import { darkTheme, lightTheme } from "../theme";
 
 interface CoinHistoryData {
   time_open: "string";
@@ -15,7 +15,12 @@ interface CoinHistoryData {
   volume: number;
 }
 
-function Chart() {
+interface IChartProps {
+  isDark: boolean;
+}
+
+function Chart({ isDark }: IChartProps) {
+  const theme = isDark ? darkTheme : lightTheme;
   const { coinId } = useParams();
   const { isLoading, data } = useQuery<CoinHistoryData[]>(
     ["ohlcv", coinId],
@@ -39,7 +44,7 @@ function Chart() {
           ]}
           options={{
             theme: {
-              mode: "dark",
+              mode: isDark ? "dark" : "light",
             },
             colors: [`${theme.accentColor}`],
             chart: {
