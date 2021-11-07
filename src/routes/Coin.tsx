@@ -1,4 +1,5 @@
 import { useQuery } from "react-query";
+import { Helmet } from "react-helmet";
 import { Outlet, useLocation, useParams } from "react-router";
 import { Link, useMatch } from "react-router-dom";
 import styled from "styled-components";
@@ -142,7 +143,10 @@ function Coin() {
   const chartMatch = useMatch("/:coinId/chart");
   const { isLoading: infoLoading, data: infoData } = useQuery<InfoData>(
     ["info", coinId],
-    () => fetchCoinInfo(coinId!)
+    () => fetchCoinInfo(coinId!),
+    {
+      refetchInterval: 5000,
+    }
   );
   const { isLoading: priceLoading, data: priceData } = useQuery<PriceData>(
     ["price", coinId],
@@ -152,6 +156,11 @@ function Coin() {
   const loading = infoLoading || priceLoading;
   return (
     <Container>
+      <Helmet>
+        <title>
+          {state?.name ? state.name : loading ? "Loading..." : infoData?.name}
+        </title>
+      </Helmet>
       <Header>
         <Title>
           {state?.name ? state.name : loading ? "Loading..." : infoData?.name}
@@ -172,7 +181,7 @@ function Coin() {
             </OverviewItem>
             <OverviewItem>
               <span>Price:</span>
-              <span>${priceData?.quotes.USD.price.toFixed(3)}</span>
+              <span>${priceData?.quotes.USD.price.toFixed(4)}</span>
             </OverviewItem>
           </Overview>
           <Description>{infoData?.description}</Description>

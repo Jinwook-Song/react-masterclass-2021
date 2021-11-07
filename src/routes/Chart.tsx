@@ -1,5 +1,5 @@
 import { useQuery } from "react-query";
-import { useLocation } from "react-router";
+import { useParams } from "react-router";
 import { fetchCoinHistory } from "../api";
 import ApexChart from "react-apexcharts";
 import { theme } from "../theme";
@@ -16,12 +16,13 @@ interface CoinHistoryData {
 }
 
 function Chart() {
-  const {
-    state: { id: coinId },
-  } = useLocation();
+  const { coinId } = useParams();
   const { isLoading, data } = useQuery<CoinHistoryData[]>(
     ["ohlcv", coinId],
-    () => fetchCoinHistory(coinId)
+    () => fetchCoinHistory(coinId!),
+    {
+      refetchInterval: 10000,
+    }
   );
   return (
     <div>
