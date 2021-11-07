@@ -4,3 +4,5 @@
 
 - [ ] Change Chart with CandleStick (Apexchart)
 - [ ] Price Page
+
+
