@@ -5,4 +5,5 @@ export const theme: DefaultTheme = {
   textColor: " #FAF8FF",
   accentColor: "#00C896",
   accentColor2: "#FF00FF",
+  bgAccentColor2: "#F5B8F5",
 };

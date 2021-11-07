@@ -33,7 +33,7 @@ const Title = styled.h1`
 const CoinsList = styled.ul``;
 
 const Coin = styled.li`
-  background-color: ${(props) => props.theme.textColor};
+  background-color: ${(props) => props.theme.bgAccentColor2};
   color: ${(props) => props.theme.bgColor};
   border-radius: 1rem;
   margin-bottom: 0.5rem;
