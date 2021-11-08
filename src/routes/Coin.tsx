@@ -39,7 +39,7 @@ const Title = styled.h1`
 const Overview = styled.div`
   display: flex;
   justify-content: space-between;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: ${(props) => props.theme.bgOpacityColor};
   padding: 0.5rem 1rem;
   border-radius: 0.5rem;
 `;
@@ -78,7 +78,7 @@ const Tab = styled.span<{ isActive: boolean }>`
   text-transform: uppercase;
   font-size: max(min(1rem, 15px), 12px);
   font-weight: 400;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: ${(props) => props.theme.bgOpacityColor};
   padding: 1rem 0;
   border-radius: 1rem;
   color: ${(props) => props.theme.accentColor2};
