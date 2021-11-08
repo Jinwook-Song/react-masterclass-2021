@@ -3,6 +3,8 @@ import { useParams } from "react-router";
 import { fetchCoinHistory } from "../api";
 import ApexChart from "react-apexcharts";
 import { darkTheme, lightTheme } from "../theme";
+import { useRecoilValue } from "recoil";
+import { isDarkAtom } from "../atoms";
 
 interface CoinHistoryData {
   time_open: "string";
@@ -15,11 +17,9 @@ interface CoinHistoryData {
   volume: number;
 }
 
-interface IChartProps {
-  isDark: boolean;
-}
+function Chart() {
+  const isDark = useRecoilValue(isDarkAtom);
 
-function Chart({ isDark }: IChartProps) {
   const theme = isDark ? darkTheme : lightTheme;
   const { coinId } = useParams();
   const { isLoading, data } = useQuery<CoinHistoryData[]>(

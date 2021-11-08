@@ -4,18 +4,15 @@ import Coin from "./routes/Coin";
 import Coins from "./routes/Coins";
 import Price from "./routes/Price";
 
-interface IRouterProps {
-  toggleDark: () => void;
-  isDark: boolean;
-}
 
-function Router({ isDark, toggleDark }: IRouterProps) {
+
+function Router() {
   return (
     <HashRouter>
       <Routes>
-        <Route path="/" element={<Coins toggleDark={toggleDark} />} />
-        <Route path="/coins/:coinId/" element={<Coin isDark={isDark} />}>
-          <Route path="chart" element={<Chart isDark={isDark} />} />
+        <Route path="/" element={<Coins  />} />
+        <Route path="/coins/:coinId/" element={<Coin  />}>
+          <Route path="chart" element={<Chart />} />
           <Route path="price" element={<Price />} />
         </Route>
       </Routes>
