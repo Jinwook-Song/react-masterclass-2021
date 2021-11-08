@@ -4,6 +4,8 @@ import { Outlet, useLocation, useParams } from "react-router";
 import { Link, useMatch } from "react-router-dom";
 import styled from "styled-components";
 import { fetchCoinInfo, fetchCoinPrice } from "../api";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { isDarkAtom } from "../atoms";
 
 const Container = styled.div`
   padding: 0 1rem;
@@ -34,6 +36,14 @@ const GoBack = styled.h1`
 const Title = styled.h1`
   font-size: max(min(3rem, 40px), 20px);
   color: ${(props) => props.theme.accentColor};
+`;
+
+const ToggleMode = styled.span`
+  font-size: max(min(3rem, 40px), 20px);
+  color: ${(props) => props.theme.accentColor2};
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 const Overview = styled.div`
@@ -142,6 +152,10 @@ interface PriceData {
 }
 
 function Coin() {
+  const isDark = useRecoilValue(isDarkAtom);
+  const setDarkAtom = useSetRecoilState(isDarkAtom);
+  const toggleDarkAtom = () => setDarkAtom((prev) => !prev);
+
   const { coinId } = useParams();
   const { state } = useLocation();
   const priceMatch = useMatch("/:coinId/price");
@@ -173,6 +187,7 @@ function Coin() {
         <Title>
           {state?.name ? state.name : loading ? "Loading..." : infoData?.name}
         </Title>
+        <ToggleMode onClick={toggleDarkAtom}>{isDark ? "🌞" : "🌚"}</ToggleMode>
       </Header>
       {loading ? (
         <Loader>Loading...</Loader>
