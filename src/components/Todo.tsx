@@ -18,6 +18,7 @@ function Todo({ id, text, category }: ITodo) {
       };
       const newTodos = [...prevTodos]; // create new array
       newTodos.splice(targetIndex, 1, newTodo);
+      localStorage.setItem("todos", JSON.stringify(newTodos));
       return newTodos;
     });
   };

@@ -9,5 +9,5 @@
 
 ### State Management
 
+- [x] Save on Localstorage
 - [ ] Delete Button
-- [ ] Save on Localstorage
