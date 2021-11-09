@@ -4,11 +4,20 @@ import { ITodo, todoState } from "../atoms";
 
 function Todo({ id, text, category }: ITodo) {
   const setTodos = useSetRecoilState(todoState);
+
   const onClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     const {
       currentTarget: { name: categoryState },
     } = event;
+    setTodos((prevTodos) => {
+      const targetIndex = prevTodos.findIndex((todo) => todo.id === id);
+      const prevTodo = prevTodos[targetIndex];
+      const newTodo = { id, text, category: categoryState };
+      console.log(prevTodo, newTodo);
+      return prevTodos;
+    });
   };
+
   return (
     <li>
       {text}
