@@ -50,7 +50,7 @@ table {
   box-sizing: border-box;
 }
 html {
-  font-size: 2vmin;
+  font-size: max(2vmax, 16px);
 }
 body {
   font-family: 'Source Sans Pro', sans-serif;
