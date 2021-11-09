@@ -24,6 +24,7 @@ export const todoState = atom<ITodo[]>({
 
 export const todoSelector = selector({
   key: "todoSelector",
+  // get func can get any atom
   get: ({ get }) => {
     const todos = get(todoState);
     const category = get(categoryState);
