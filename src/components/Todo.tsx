@@ -11,10 +11,14 @@ function Todo({ id, text, category }: ITodo) {
     } = event;
     setTodos((prevTodos) => {
       const targetIndex = prevTodos.findIndex((todo) => todo.id === id);
-      const prevTodo = prevTodos[targetIndex];
-      const newTodo = { id, text, category: categoryState };
-      console.log(prevTodo, newTodo);
-      return prevTodos;
+      const newTodo: ITodo = {
+        id,
+        text,
+        category: categoryState as ITodo["category"],
+      };
+      const newTodos = [...prevTodos]; // create new array
+      newTodos.splice(targetIndex, 1, newTodo);
+      return newTodos;
     });
   };
 
