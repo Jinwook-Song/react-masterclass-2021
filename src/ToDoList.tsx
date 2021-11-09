@@ -15,6 +15,7 @@ interface IForm {
   username: string;
   password: string;
   passwordConfirm: string;
+  extraError?: string;
 }
 
 function ToDoList() {
@@ -22,13 +23,21 @@ function ToDoList() {
     register,
     handleSubmit,
     formState: { errors },
+    setError,
   } = useForm<IForm>({
     defaultValues: {
       email: "@naver.com",
     },
   });
-  const onValid = (data: any) => {
-    console.log(data);
+  const onValid = (data: IForm) => {
+    if (data.password !== data.passwordConfirm) {
+      setError(
+        "passwordConfirm",
+        { message: "Password are not the same." },
+        { shouldFocus: true }
+      );
+    }
+    setError("extraError", { message: "Unexpected Error." });
   };
   return (
     <div>
@@ -37,7 +46,15 @@ function ToDoList() {
         onSubmit={handleSubmit(onValid)}
       >
         <input
-          {...register("firstName", { required: "First Name is required." })}
+          {...register("firstName", {
+            required: "First Name is required.",
+            validate: {
+              noNico: (value) =>
+                value.includes("nico") ? "nico is not allowed." : true,
+              noJW: (value) =>
+                value.includes("jw") ? "jw is not allowed." : true,
+            },
+          })}
           placeholder="First Name"
         />
         {errors?.firstName?.message ? (
@@ -99,6 +116,9 @@ function ToDoList() {
         ) : null}
 
         <button>Add</button>
+        {errors?.extraError ? (
+          <ErrorMessage>{errors?.extraError?.message}</ErrorMessage>
+        ) : null}
       </form>
     </div>
   );
