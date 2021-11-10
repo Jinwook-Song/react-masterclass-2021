@@ -58,8 +58,8 @@ html {
 }
 body {
   font-family: 'Source Sans Pro', sans-serif;
-  background-color: ${(props) => props.theme.bgColor};
-  color: ${(props) => props.theme.textColor};
+  background-color: ${(props) => props.theme.bgAccentColor};
+  color: ${(props) => props.theme.accentColor2};
 }
 a {
   text-decoration: none;
