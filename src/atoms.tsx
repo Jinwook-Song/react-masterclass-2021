@@ -5,10 +5,14 @@ export const minState = atom({
   default: 0,
 });
 
-export const housrSelector = selector({
+export const housrSelector = selector<number>({
   key: "hour",
   get: ({ get }) => {
     const min = get(minState);
-    return (min / 60).toFixed(2);
+    return min / 60;
+  },
+  set: ({ set }, newValue) => {
+    const min = Number(newValue) * 60;
+    set(minState, min);
   },
 });
