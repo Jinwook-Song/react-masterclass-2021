@@ -5,6 +5,7 @@ import styled from "styled-components";
 const Card = styled.div`
   background-color: ${(props) => props.theme.accentColor};
   padding: 0.3rem;
+  margin: 0.2rem 0;
   border-radius: 0.2rem;
 `;
 
@@ -15,7 +16,7 @@ interface IDragabbleCardProps {
 
 function DragabbleCard({ todo, idx }: IDragabbleCardProps) {
   return (
-    <Draggable key={todo} draggableId={todo} index={idx}>
+    <Draggable draggableId={todo} index={idx}>
       {(provided) => (
         <Card
           ref={provided.innerRef}

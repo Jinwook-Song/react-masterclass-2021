@@ -1,8 +1,8 @@
-import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
+import { DragDropContext, DropResult } from "react-beautiful-dnd";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import { todoState } from "./atoms";
-import DragabbleCard from "./Components/DragabbleCard";
+import Board from "./Components/Board";
 
 const Wrapper = styled.div`
   display: flex;
@@ -17,22 +17,14 @@ const Wrapper = styled.div`
 const Boards = styled.div`
   display: grid;
   width: 100%;
-  grid-template-columns: repeat() (3, 1fr);
-`;
-
-const Board = styled.div`
-  background-color: ${(props) => props.theme.bgAccentColor2};
-  padding: 0.5rem;
-  border-radius: 0.2rem;
-  min-height: 10vh;
-  display: grid;
-  gap: 0.2rem;
+  gap: 0.5rem;
+  grid-template-columns: repeat(3, 1fr);
 `;
 
 function App() {
   const [todos, setTodos] = useRecoilState(todoState);
   const onDragEnd = ({ draggableId, destination, source }: DropResult) => {
-    if (!destination) return;
+    /*     if (!destination) return;
     setTodos((prevTodos) => {
       const newTodos = [...prevTodos];
       // Delete item on source
@@ -40,22 +32,15 @@ function App() {
       // Put back the item
       newTodos.splice(destination?.index, 0, draggableId);
       return newTodos;
-    });
+    }); */
   };
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <Wrapper>
         <Boards>
-          <Droppable droppableId="one">
-            {(provided) => (
-              <Board ref={provided.innerRef} {...provided.droppableProps}>
-                {todos.map((todo, idx) => (
-                  <DragabbleCard key={todo} todo={todo} idx={idx} />
-                ))}
-                {provided.placeholder}
-              </Board>
-            )}
-          </Droppable>
+          {Object.keys(todos).map((boardId) => (
+            <Board key={boardId} boardId={boardId} todos={todos[boardId]} />
+          ))}
         </Boards>
       </Wrapper>
     </DragDropContext>
