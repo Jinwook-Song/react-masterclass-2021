@@ -13,3 +13,7 @@
 - [ ] Delete Button
 - [ ] Drop and Flush
 - [ ] Reorder Boards
+
+### Animation
+
+- [Framer Motion](https://www.framer.com/docs/introduction/)

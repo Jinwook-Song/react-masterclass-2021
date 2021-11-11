@@ -9,7 +9,7 @@ const Wrapper = styled.div`
   align-items: center;
 `;
 
-const Box = styled.div`
+const Box = styled(motion.div)`
   width: 200px;
   height: 200px;
   background-color: white;
@@ -20,8 +20,11 @@ const Box = styled.div`
 function App() {
   return (
     <Wrapper>
-      <Box />
-      <motion.div></motion.div>
+      <Box
+        transition={{ type: "spring", damping: 0, stiffness: 5 }}
+        initial={{ scale: 0 }}
+        animate={{ scale: 1, rotateZ: 360 }}
+      />
     </Wrapper>
   );
 }
