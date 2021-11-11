@@ -15,6 +15,7 @@ const Title = styled.h2`
   text-align: center;
   font-weight: 600;
   font-size: 2rem;
+  white-space: nowrap;
 `;
 
 interface IAreaProps {
@@ -23,6 +24,8 @@ interface IAreaProps {
 }
 
 const Area = styled.div<IAreaProps>`
+  border-radius: 0.2rem;
+  padding: 0 0.2rem;
   background-color: ${(props) =>
     props.isDraggingOver
       ? props.theme.accentColor2

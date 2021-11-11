@@ -6,7 +6,7 @@ import Board from "./Components/Board";
 
 const Wrapper = styled.div`
   display: flex;
-  max-width: 600px;
+  max-width: 80vw;
   width: 100%;
   height: 100vh;
   margin: 0 auto;
@@ -18,7 +18,10 @@ const Boards = styled.div`
   display: grid;
   width: 100%;
   gap: 0.5rem;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(1, 1fr);
+  @media screen and (min-width: 769px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
 `;
 
 function App() {
@@ -44,20 +47,19 @@ function App() {
     }
 
     // cross board movement
-    if(destination.droppableId !== source.droppableId) {
+    if (destination.droppableId !== source.droppableId) {
       setTodos((allBoards) => {
-        const sourceBoard =[...allBoards[source.droppableId]]
-        const destinationBoard = [...allBoards[destination.droppableId]]
+        const sourceBoard = [...allBoards[source.droppableId]];
+        const destinationBoard = [...allBoards[destination.droppableId]];
         sourceBoard.splice(source.index, 1);
         destinationBoard.splice(destination?.index, 0, draggableId);
         return {
           ...allBoards,
           [source.droppableId]: sourceBoard,
-[destination.droppableId]: destinationBoard
-        }
-      })
+          [destination.droppableId]: destinationBoard,
+        };
+      });
     }
-
   };
   return (
     <DragDropContext onDragEnd={onDragEnd}>
