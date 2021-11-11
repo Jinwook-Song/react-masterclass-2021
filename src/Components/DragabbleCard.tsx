@@ -6,7 +6,7 @@ const Card = styled.div<{ isDragging: boolean }>`
   background-color: ${(props) =>
     props.isDragging ? props.theme.accentColor2 : props.theme.accentColor};
   padding: 0.3rem;
-  margin: 0.2rem 0;
+  margin: 0.3rem 1rem;
   border-radius: 0.2rem;
   box-shadow: ${(props) =>
     props.isDragging ? "0.5rem 0.5rem 1rem rgba(0,0,0,0.5)" : "none"};

@@ -9,9 +9,12 @@ const Wrapper = styled.div`
   background-color: ${(props) => props.theme.bgAccentColor2};
   padding: 0.5rem;
   border-radius: 0.2rem;
-  min-height: 10vh;
+  min-height: 25vh;
   display: flex;
   flex-direction: column;
+  @media screen and (min-width: 769px) {
+    min-height: 70vh;
+  }
 `;
 
 const Title = styled.h2`
@@ -19,13 +22,27 @@ const Title = styled.h2`
   font-weight: 600;
   font-size: 2rem;
   white-space: nowrap;
+  color: ${(props) => props.theme.accentColor2};
 `;
 
 const Form = styled.form`
   width: 100%;
   padding: 0 0.2rem;
+  display: flex;
+  justify-content: center;
   input {
-    width: 100%;
+    font-size: 1rem;
+    border: 0;
+    background-color: ${(props) => props.theme.bgAccentColor};
+    color: ${(props) => props.theme.accentColor};
+    width: 80%;
+    padding: 0.2rem;
+    border-radius: 0.2rem;
+    text-align: center;
+    margin: 0 auto;
+    &::placeholder {
+      color: ${(props) => props.theme.textColor};
+    }
   }
 `;
 
@@ -80,9 +97,10 @@ function Board({ todos, boardId }: IBoardProps) {
         <input
           {...register("todo", { required: true })}
           type="text"
-          placeholder={`Add task on ${boardId}`}
+          placeholder={`Add on ${boardId}...`}
         />
       </Form>
+      <br />
       <Droppable droppableId={boardId}>
         {(provided, snapshot) => (
           <Area

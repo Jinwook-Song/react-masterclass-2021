@@ -7,7 +7,9 @@
 - [ ] Change Chart with CandleStick (Apexchart)
 - [ ] Price Page
 
-### State Management
+### Trello (State Management)
 
 - [x] Save on Localstorage
 - [ ] Delete Button
+- [ ] Drop and Flush
+- [ ] Reorder Boards
