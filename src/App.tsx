@@ -1,47 +1,46 @@
 import styled from "styled-components";
-import {
-  motion,
-  useMotionValue,
-  useTransform,
-  useViewportScroll,
-} from "framer-motion";
+import { motion, Variants } from "framer-motion";
 
 const Wrapper = styled(motion.div)`
-  height: 200vh;
+  height: 100vh;
   width: 100vw;
   display: flex;
   justify-content: center;
   align-items: center;
 `;
 
-const Box = styled(motion.div)`
-  width: 200px;
-  height: 200px;
-  background-color: rgba(255, 255, 255, 1);
-  border-radius: 40px;
-  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1), 0 10px 20px rgba(0, 0, 0, 0.06);
+const Svg = styled.svg`
+  height: 300px;
+  width: 300px;
+  path {
+    stroke: rgb(255, 149, 0);
+    stroke-width: "2";
+  }
 `;
 
-function App() {
-  // mouse move
-  const x = useMotionValue(0);
-  const rotateZ = useTransform(x, [-600, 600], [-360, 360]);
-  const gradient = useTransform(
-    x,
-    [-600, 0, 600],
-    [
-      "linear-gradient(135deg, rgb(58, 225, 255), rgb(69, 81, 250))",
-      "linear-gradient(135deg, rgb(238, 0, 153), rgb(221, 0, 238))",
-      "linear-gradient(135deg, rgb(138, 252, 63), rgb(55, 185, 22))",
-    ]
-  );
+const svg: Variants = {
+  start: { pathLength: 0, fill: "rgba(255,149,0,0)" },
+  end: {
+    pathLength: 1,
+    fill: "rgba(255,149,0,1)",
+  },
+};
 
-  // scroll move
-  const { scrollYProgress } = useViewportScroll();
-  const scale = useTransform(scrollYProgress, [0, 1], [1, 0.2]);
+function App() {
   return (
-    <Wrapper style={{ background: gradient }}>
-      <Box style={{ x, rotateZ, scale }} drag="x" dragSnapToOrigin />
+    <Wrapper>
+      <Svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300">
+        <motion.path
+          variants={svg}
+          initial="start"
+          animate="end"
+          transition={{
+            default: { duration: 4 },
+            fill: { duration: 1, delay: 2 },
+          }}
+          d="M86.642 0L122 94.469H0l3.914-11.741L35.494 0h14.44l10.391 28.88L72.201 0h14.44zM49.934 83.942h20.783L66.803 74.9l-6.478-17.139-10.391 26.181zM43.32 9.312l-28.88 74.63h24.966l1.215-1.214 14.44-39.407-3.914-10.527-7.827-23.482zm62.89 74.63l-2.7-9.042-7.827-19.838-7.828-22.268L78.68 9.312 65.59 43.32l15.654 40.621h24.967z"
+        />
+      </Svg>
     </Wrapper>
   );
 }
