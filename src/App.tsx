@@ -24,51 +24,48 @@ const Box = styled(motion.div)`
 `;
 
 const card: Variants = {
-  invisible: {
-    x: 500,
+  entry: (back: boolean) => ({
+    x: back ? -500 : 500,
     opacity: 0,
     scale: 0,
-  },
-  visible: {
+  }),
+  center: {
     x: 0,
     opacity: 1,
     scale: 1,
   },
-  exit: {
-    x: -500,
+  exit: (back: boolean) => ({
+    x: back ? 500 : -500,
     opacity: 0,
     scale: 0,
-  },
+  }),
 };
 
 function App() {
   const [visible, setVisible] = useState(1);
-  const [foward, setFoard] = useState(true);
+  const [back, setBack] = useState(false);
   const nextCard = () => {
-    setFoard(true);
+    setBack(false);
     setVisible((prev) => (prev === 10 ? 1 : prev + 1));
   };
   const prevCard = () => {
-    setFoard(false);
+    setBack(true);
     setVisible((prev) => (prev === 1 ? 10 : prev - 1));
   };
   return (
     <Wrapper>
-      <AnimatePresence>
-        {"1,2,3,4,5,6,7,8,9,10".split(",").map((i) =>
-          +i === visible ? (
-            <Box
-              key={i}
-              variants={card}
-              initial={`${foward}` ? "invisible" : "exit"}
-              animate="visible"
-              exit={`${foward}` ? "exit" : "invisible"}
-              transition={{ duration: 0.5 }}
-            >
-              {i}
-            </Box>
-          ) : null
-        )}
+      <AnimatePresence exitBeforeEnter custom={back}>
+        <Box
+          custom={back}
+          key={visible}
+          variants={card}
+          initial="entry"
+          animate="center"
+          exit="exit"
+          transition={{ duration: 0.2 }}
+        >
+          {visible}
+        </Box>
       </AnimatePresence>
       <button onClick={prevCard}>prev</button>
       <button onClick={nextCard}>next</button>
