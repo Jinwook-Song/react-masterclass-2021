@@ -1,19 +1,23 @@
 import { Link, useMatch } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styled from "styled-components";
-import { motion, Variants } from "framer-motion";
+import {
+  motion,
+  useAnimation,
+  useViewportScroll,
+  Variants,
+} from "framer-motion";
 
-const Nav = styled.nav`
+const Nav = styled(motion.nav)`
   display: flex;
   justify-content: space-between;
   align-items: center;
   position: fixed;
   width: 100%;
   top: 0;
-  background-color: black;
   color: white;
   font-size: max(0.5rem, 16px);
-  padding: min(0.6rem, 13px) 2.5rem;
+  padding: min(0.6rem, 10px) 2.5rem;
 `;
 
 const Col = styled.div`
@@ -23,8 +27,8 @@ const Col = styled.div`
 
 const Logo = styled(motion.svg)`
   margin-right: 2rem;
-  width: min(4.5rem, 130px);
-  height: min(1.2rem, 40px);
+  width: min(4.5rem, 100px);
+  height: min(1.2rem, 25px);
   fill: ${(props) => props.theme.red};
   path {
     stroke-width: 0.3rem;
@@ -58,7 +62,7 @@ const Circle = styled(motion.span)`
   max-height: 5px;
   background-color: ${(props) => props.theme.red};
   border-radius: 50%;
-  bottom: -0.33rem;
+  bottom: -0.2rem;
   left: 0;
   right: 0;
   margin: 0 auto;
@@ -69,12 +73,17 @@ const Search = styled.span`
   align-items: center;
   color: white;
   svg {
-    height: min(1rem, 22px);
+    height: min(1rem, 25px);
   }
 `;
 
 const Input = styled(motion.input)`
   transform-origin: right center;
+  padding: min(0.1rem, 5px) min(0.2rem, 10px);
+  color: white;
+  font-size: min(1rem, 16px);
+  background-color: transparent;
+  border: 0.1rem solid ${(props) => props.theme.white.lightWhite};
 `;
 
 // for animation
@@ -89,15 +98,48 @@ const logoVariants: Variants = {
     },
   },
 };
+const navVariants = {
+  top: {
+    backgroundColor: "rgba(0, 0, 0, 0)",
+  },
+  scroll: {
+    backgroundColor: "rgba(0, 0, 0, 1)",
+  },
+};
 
 function Header() {
   const [searchOpen, setSearchOpen] = useState(false);
   const isHome = useMatch("/");
   const isTv = useMatch("/tv");
-  const toggleSearchIcon = () => setSearchOpen((prev) => !prev);
+  const inputAnimation = useAnimation();
+  const navAnimation = useAnimation();
+  const { scrollYProgress } = useViewportScroll();
+
+  const toggleSearchIcon = () => {
+    if (searchOpen) {
+      inputAnimation.start({
+        scaleX: 0,
+      });
+    } else {
+      inputAnimation.start({
+        scaleX: 1,
+      });
+    }
+    setSearchOpen((prev) => !prev);
+  };
+
+  useEffect(() => {
+    scrollYProgress.onChange(() => {
+      if (scrollYProgress.get() > 0.1) {
+        navAnimation.start("scroll");
+      } else {
+        navAnimation.start("top");
+      }
+    });
+  }, [scrollYProgress, navAnimation]);
 
   return (
-    <Nav>
+    <Nav variants={navVariants} animate={navAnimation} initial={"top"}>
       <Col>
         <Link to="/">
           <Logo
@@ -143,7 +185,7 @@ function Header() {
             </motion.svg>
           ) : null}
           <Input
-            animate={{ scaleX: searchOpen ? 1 : 0 }}
+            animate={inputAnimation}
             placeholder="Titles, people, genres"
           />
           {searchOpen ? null : (
