@@ -54,7 +54,7 @@ table {
   box-sizing: border-box;
 }
 html {
-  font-size: max(2vmax, 16px);
+  font-size: max(2vmax, 20px);
 }
 body {
   font-family: 'Source Sans Pro', sans-serif;
