@@ -184,10 +184,13 @@ function Header() {
               ></path>
             </motion.svg>
           ) : null}
-          <Input
-            animate={inputAnimation}
-            placeholder="Titles, people, genres"
-          />
+          {searchOpen ? (
+            <Input
+            layoutId="input"
+              animate={inputAnimation}
+              placeholder="Titles, people, genres"
+            />
+          ) : null}
           {searchOpen ? null : (
             <motion.svg
               onClick={toggleSearchIcon}
