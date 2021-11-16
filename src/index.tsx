@@ -58,9 +58,11 @@ html {
   font-size: max(2vmax, 20px);
 }
 body {
+  font-weight: 300;
   font-family: 'Source Sans Pro', sans-serif;
   line-height: 1.2;
-  color: black
+  color: ${(props) => props.theme.white.darkWhite};
+  background-color: black
 }
 a {
   text-decoration: none;
