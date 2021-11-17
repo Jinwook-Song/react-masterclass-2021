@@ -26,7 +26,4 @@ export async function getMovies(): Promise<GetMoViesApi<MoviesData[]>> {
   );
   const response = await request.json();
   return response;
-  //   return fetch(`${BASE_PATH}/movie/now_playing?api_key=${API_KEY}`).then(
-  //     (response) => response.json()
-  //   );
 }
