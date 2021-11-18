@@ -5,6 +5,17 @@ import { motion, AnimatePresence, Variants } from "framer-motion";
 import { getMovies } from "../api";
 import { makeImagePath } from "../utils";
 
+// Card offest
+let offset: number;
+if (window.innerWidth < 400) {
+  offset = 2;
+} else if (window.innerWidth < 768) {
+  offset = 4;
+} else {
+  offset = 6;
+}
+
+// Style
 const Wrapper = styled.div`
   background-color: black;
 `;
@@ -54,6 +65,14 @@ const Row = styled(motion.div)`
   gap: 0.2rem;
   position: absolute;
   width: 100%;
+
+  @media screen and (max-width: 768px) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  @media screen and (max-width: 450px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
 `;
 
 const Box = styled(motion.div)<{ bgPhoto: string }>`
@@ -66,6 +85,18 @@ const Box = styled(motion.div)<{ bgPhoto: string }>`
   }
   &:last-child {
     transform-origin: center right;
+  }
+`;
+const CardInfo = styled(motion.div)`
+  padding: min(0.5rem, 14px);
+  background-color: ${(props) => props.theme.black.lightDark};
+  opacity: 0;
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  h4 {
+    text-align: center;
+    font-size: min(0.5rem, 12px);
   }
 `;
 
@@ -97,7 +128,16 @@ const BoxVariants: Variants = {
   },
 };
 
-const offset = 6;
+const CardInfoVariants: Variants = {
+  hover: {
+    opacity: 1,
+    transition: {
+      delay: 0.5,
+      duration: 0.3,
+      type: "tween",
+    },
+  },
+};
 
 function Home() {
   const { data, isLoading } = useQuery(["movies", "nowPlaying"], getMovies);
@@ -148,7 +188,9 @@ function Home() {
                       transition={{ type: "tween" }}
                       bgPhoto={makeImagePath(movie.backdrop_path, "w500" || "")}
                     >
-                      {movie.title}
+                      <CardInfo variants={CardInfoVariants}>
+                        <h4>{movie.title}</h4>
+                      </CardInfo>
                     </Box>
                   ))}
               </Row>
