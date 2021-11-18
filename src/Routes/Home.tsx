@@ -57,14 +57,20 @@ const Row = styled(motion.div)`
 `;
 
 const Box = styled(motion.div)<{ bgPhoto: string }>`
-  height: 10rem;
+  height: 6rem;
   background-image: url(${(props) => props.bgPhoto});
   background-size: cover;
   background-position: center center;
+  &:first-child {
+    transform-origin: center left;
+  }
+  &:last-child {
+    transform-origin: center right;
+  }
 `;
 
 // for Animation
-const rowVariant: Variants = {
+const rowVariants: Variants = {
   hidden: {
     x: window.innerWidth * 1.004,
   },
@@ -73,6 +79,21 @@ const rowVariant: Variants = {
   },
   exit: {
     x: -(window.innerWidth * 0.996),
+  },
+};
+
+const BoxVariants: Variants = {
+  normal: {
+    scale: 1,
+  },
+  hover: {
+    scale: 1.3,
+    y: -window.innerHeight * 0.03,
+    transition: {
+      delay: 0.5,
+      duration: 0.3,
+      type: "tween",
+    },
   },
 };
 
@@ -109,7 +130,7 @@ function Home() {
             <AnimatePresence initial={false} onExitComplete={toggleLeaving}>
               <Row
                 transition={{ type: "tween", duration: 0.7 }}
-                variants={rowVariant}
+                variants={rowVariants}
                 initial="hidden"
                 animate="visible"
                 exit="exit"
@@ -121,6 +142,10 @@ function Home() {
                   .map((movie) => (
                     <Box
                       key={movie.id}
+                      variants={BoxVariants}
+                      initial="normal"
+                      whileHover="hover"
+                      transition={{ type: "tween" }}
                       bgPhoto={makeImagePath(movie.backdrop_path, "w500" || "")}
                     >
                       {movie.title}
