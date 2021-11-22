@@ -124,6 +124,31 @@ const BigCard = styled(motion.div)`
   left: 0;
   right: 0;
   margin: 0 auto;
+  background-color: ${(props) => props.theme.black.lightDark};
+  overflow: hidden;
+  border-radius: 1rem;
+`;
+
+const BigCardCover = styled.div`
+  width: 100%;
+  height: 60%;
+  background-size: cover;
+  background-position: center center;
+`;
+const BigCardTitle = styled.h3`
+  color: ${(props) => props.theme.white.lightWhite};
+  font-size: 1rem;
+  padding: 1rem;
+  position: relative;
+  top: -3rem;
+`;
+const BigCardOverview = styled.p`
+  font-size: 0.8rem;
+  opacity: 0.6;
+  padding: 1rem;
+  color: ${(props) => props.theme.white.lightWhite};
+  position: relative;
+  top: -3rem;
 `;
 
 // for Animation
@@ -188,6 +213,9 @@ function Home() {
   const onOverlayClick = () => {
     navigate(-1);
   };
+  const clickedCard =
+    CardMovieMatch?.params.movieId &&
+    data?.results.find((movie) => movie.id === +CardMovieMatch.params.movieId!);
   return (
     <Wrapper>
       {isLoading ? (
@@ -244,7 +272,22 @@ function Home() {
                 <BigCard
                   style={{ top: scrollY.get() + 50 }}
                   layoutId={CardMovieMatch.params.movieId}
-                ></BigCard>
+                >
+                  {clickedCard ? (
+                    <>
+                      <BigCardCover
+                        style={{
+                          backgroundImage: `linear-gradient(to top, black,transparent), url(${makeImagePath(
+                            clickedCard.backdrop_path,
+                            "w500"
+                          )})`,
+                        }}
+                      />
+                      <BigCardTitle>{clickedCard.title}</BigCardTitle>
+                      <BigCardOverview>{clickedCard.overview}</BigCardOverview>
+                    </>
+                  ) : null}
+                </BigCard>
               </>
             ) : null}
           </AnimatePresence>
