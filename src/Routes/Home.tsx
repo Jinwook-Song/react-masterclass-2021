@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useQuery } from "react-query";
+import { useNavigate, useMatch } from "react-router-dom";
 import styled from "styled-components";
 import { motion, AnimatePresence, Variants } from "framer-motion";
 import { getMovies } from "../api";
@@ -80,6 +81,7 @@ const Box = styled(motion.div)<{ bgPhoto: string }>`
   background-image: url(${(props) => props.bgPhoto});
   background-size: cover;
   background-position: center center;
+  cursor: pointer;
   &:first-child {
     transform-origin: center left;
   }
@@ -87,6 +89,7 @@ const Box = styled(motion.div)<{ bgPhoto: string }>`
     transform-origin: center right;
   }
 `;
+
 const CardInfo = styled(motion.div)`
   padding: min(0.5rem, 14px);
   background-color: ${(props) => props.theme.black.lightDark};
@@ -140,6 +143,8 @@ const CardInfoVariants: Variants = {
 };
 
 function Home() {
+  const navigate = useNavigate();
+  const CardMovieMatch = useMatch("/movies/:movieId");
   const { data, isLoading } = useQuery(["movies", "nowPlaying"], getMovies);
   const [index, setIndex] = useState(0);
   const [leaving, setLeaving] = useState(false);
@@ -153,6 +158,9 @@ function Home() {
     }
   };
   const toggleLeaving = () => setLeaving((prev) => !prev);
+  const onBoxClicked = (movieId: number) => {
+    navigate(`movies/${movieId}`);
+  };
   return (
     <Wrapper>
       {isLoading ? (
@@ -181,7 +189,9 @@ function Home() {
                   .slice(offset * index, offset * index + offset)
                   .map((movie) => (
                     <Box
+                      layoutId={movie.id + ""}
                       key={movie.id}
+                      onClick={() => onBoxClicked(movie.id)}
                       variants={BoxVariants}
                       initial="normal"
                       whileHover="hover"
@@ -196,6 +206,23 @@ function Home() {
               </Row>
             </AnimatePresence>
           </Slider>
+          <AnimatePresence>
+            {CardMovieMatch ? (
+              <motion.div
+                layoutId={CardMovieMatch.params.movieId}
+                style={{
+                  position: "absolute",
+                  width: "60vw",
+                  height: "80vh",
+                  backgroundColor: "red",
+                  top: 50,
+                  left: 0,
+                  right: 0,
+                  margin: "0 auto",
+                }}
+              ></motion.div>
+            ) : null}
+          </AnimatePresence>
         </>
       )}
     </Wrapper>
