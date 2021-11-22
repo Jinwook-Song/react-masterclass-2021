@@ -17,3 +17,9 @@
 ### Animation
 
 - [Framer Motion](https://www.framer.com/docs/introduction/)
+
+### Netflix
+
+- [ ] TV shows
+- [ ] Search
+- [ ] Detail
