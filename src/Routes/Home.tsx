@@ -2,7 +2,12 @@ import { useState } from "react";
 import { useQuery } from "react-query";
 import { useNavigate, useMatch } from "react-router-dom";
 import styled from "styled-components";
-import { motion, AnimatePresence, Variants } from "framer-motion";
+import {
+  motion,
+  AnimatePresence,
+  Variants,
+  useViewportScroll,
+} from "framer-motion";
 import { getMovies } from "../api";
 import { makeImagePath } from "../utils";
 
@@ -103,6 +108,24 @@ const CardInfo = styled(motion.div)`
   }
 `;
 
+const Overlay = styled(motion.div)`
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+`;
+
+const BigCard = styled(motion.div)`
+  position: absolute;
+  width: 50vw;
+  height: 80vh;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+`;
+
 // for Animation
 const rowVariants: Variants = {
   hidden: {
@@ -145,6 +168,7 @@ const CardInfoVariants: Variants = {
 function Home() {
   const navigate = useNavigate();
   const CardMovieMatch = useMatch("/movies/:movieId");
+  const { scrollY } = useViewportScroll();
   const { data, isLoading } = useQuery(["movies", "nowPlaying"], getMovies);
   const [index, setIndex] = useState(0);
   const [leaving, setLeaving] = useState(false);
@@ -160,6 +184,9 @@ function Home() {
   const toggleLeaving = () => setLeaving((prev) => !prev);
   const onBoxClicked = (movieId: number) => {
     navigate(`movies/${movieId}`);
+  };
+  const onOverlayClick = () => {
+    navigate(-1);
   };
   return (
     <Wrapper>
@@ -208,19 +235,17 @@ function Home() {
           </Slider>
           <AnimatePresence>
             {CardMovieMatch ? (
-              <motion.div
-                layoutId={CardMovieMatch.params.movieId}
-                style={{
-                  position: "absolute",
-                  width: "60vw",
-                  height: "80vh",
-                  backgroundColor: "red",
-                  top: 50,
-                  left: 0,
-                  right: 0,
-                  margin: "0 auto",
-                }}
-              ></motion.div>
+              <>
+                <Overlay
+                  onClick={onOverlayClick}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                />
+                <BigCard
+                  style={{ top: scrollY.get() + 50 }}
+                  layoutId={CardMovieMatch.params.movieId}
+                ></BigCard>
+              </>
             ) : null}
           </AnimatePresence>
         </>
