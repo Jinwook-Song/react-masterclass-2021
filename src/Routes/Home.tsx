@@ -135,6 +135,7 @@ const BigCardCover = styled.div`
   background-size: cover;
   background-position: center center;
 `;
+
 const BigCardTitle = styled.h3`
   color: ${(props) => props.theme.white.lightWhite};
   font-size: 1rem;
@@ -142,6 +143,7 @@ const BigCardTitle = styled.h3`
   position: relative;
   top: -3rem;
 `;
+
 const BigCardOverview = styled.p`
   font-size: 0.8rem;
   opacity: 0.6;

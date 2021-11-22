@@ -1,5 +1,5 @@
 function Tv() {
-  return <div>Tv Page</div>;
+  return <div style={{ position: "fixed", top: 100 }}>Tv Page</div>;
 }
 
 export default Tv;

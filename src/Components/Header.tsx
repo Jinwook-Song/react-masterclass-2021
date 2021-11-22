@@ -1,5 +1,6 @@
-import { Link, useMatch } from "react-router-dom";
+import { Link, useMatch, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { useForm } from "react-hook-form";
 import styled from "styled-components";
 import {
   motion,
@@ -68,7 +69,7 @@ const Circle = styled(motion.span)`
   margin: 0 auto;
 `;
 
-const Search = styled.span`
+const Search = styled.form`
   display: flex;
   align-items: center;
   color: white;
@@ -107,6 +108,10 @@ const navVariants = {
   },
 };
 
+interface IForm {
+  keyword: string;
+}
+
 function Header() {
   const [searchOpen, setSearchOpen] = useState(false);
   const isHome = useMatch("/");
@@ -138,6 +143,13 @@ function Header() {
     });
   }, [scrollYProgress, navAnimation]);
 
+  const navigate = useNavigate();
+  const { register, handleSubmit } = useForm<IForm>();
+
+  const onValid = (data: IForm) => {
+    console.log(data);
+    navigate(`/search?keyword=${data.keyword}`);
+  };
   return (
     <Nav variants={navVariants} animate={navAnimation} initial={"top"}>
       <Col>
@@ -168,7 +180,7 @@ function Header() {
         </Items>
       </Col>
       <Col>
-        <Search>
+        <Search onSubmit={handleSubmit(onValid)}>
           {searchOpen ? (
             <motion.svg
               onClick={toggleSearchIcon}
@@ -186,7 +198,8 @@ function Header() {
           ) : null}
           {searchOpen ? (
             <Input
-            layoutId="input"
+              {...register("keyword", { required: true, minLength: 2 })}
+              layoutId="input"
               animate={inputAnimation}
               placeholder="Titles, people, genres"
             />
