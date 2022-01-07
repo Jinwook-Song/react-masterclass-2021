@@ -18,7 +18,7 @@ const Container = styled.div<IContainerProps>`
 `;
 
 function Circle(props: ICircleProps) {
-  return <Container {...props} />;
+  return <Container {...props}>{props.text ?? 'defualt text'}</Container>;
 }
 
 export default Circle;
